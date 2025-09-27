@@ -1,7 +1,5 @@
 // Image list route for debugging
 const imageListRoutes = require('./routes/imageListRoutes');
-
-
 const imageRoutes = require('./routes/imageRoutes');
 const offerImagesRoutes = require('./routes/offerImages');
 const express = require('express');
@@ -14,7 +12,25 @@ dotenv.config();
 
 const app = express();
 app.use(express.json());
-app.use(cors());
+const allowedOrigins = [
+  "https://client-q5dl.onrender.com", // your deployed frontend
+  "http://localhost:3000", 
+  "http://localhost:3001"           // optional, for local dev
+];
+
+app.use(cors({
+  origin: function(origin, callback){
+    // allow requests with no origin (like Postman)
+    if(!origin) return callback(null, true);
+    if(allowedOrigins.indexOf(origin) === -1){
+      const msg = `The CORS policy for this site does not allow access from the specified Origin.`;
+      return callback(new Error(msg), false);
+    }
+    return callback(null, true);
+  },
+  credentials: true
+}));
+
 // Serve static files from uploads folder
 app.use('/uploads', express.static('uploads'));
 app.use('/api/offers/images', offerImagesRoutes);
