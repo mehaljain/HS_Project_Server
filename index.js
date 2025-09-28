@@ -13,7 +13,8 @@ dotenv.config();
 const app = express();
 app.use(express.json());
 const allowedOrigins = [
-  "https://client-q5dl.onrender.com", // your deployed frontend
+  "https://client-q5dl.onrender.com",
+  "https://your-other-frontend.com", // your deployed frontend
   "http://localhost:3000", 
   "http://localhost:3001"           // optional, for local dev
 ];
