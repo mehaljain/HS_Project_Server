@@ -6,11 +6,9 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const dotenv = require('dotenv');
+const app = express();
 
 dotenv.config();
-
-
-const app = express();
 app.use(express.json());
 const allowedOrigins = [
   "https://client-q5dl.onrender.com",
@@ -63,9 +61,11 @@ app.use('/api/upload', uploadRoutes);
 app.get('/', (req, res) => {
   res.send('API is running...');
 });
+
 // Offers routes
 const offersRoutes = require('./routes/offers');
 app.use('/api/offers', offersRoutes);
+
 // Connect to MongoDB Atlas
 mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
